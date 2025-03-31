@@ -73,7 +73,7 @@ jobs:
 
       - name: Count lines of code with Cloc
         run: |
-          cloc src/ > cloc-report.txt
+          cloc > cloc-report.txt
           cat cloc-report.txt
 
       - name: Upload Cloc Report
