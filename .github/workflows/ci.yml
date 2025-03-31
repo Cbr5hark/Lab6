@@ -11,6 +11,27 @@ on:
     types: [opened, edited, reopened, synchronize, review_requested, submitted]
 
 jobs:
+  review-check:
+    name: Code Review Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Перевірка наявності схваленого код-рев'ю
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const {data: reviews} = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+            const approved = reviews.some(review => review.state === 'APPROVED');
+            if (!approved) {
+              core.setFailed("Код-рев'ю не схвалено");
+            }
+
+
   test:
     runs-on: ubuntu-latest
     steps:
