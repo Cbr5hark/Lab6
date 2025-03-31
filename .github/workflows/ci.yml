@@ -63,3 +63,23 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  count-lines-of-code:
+    name: Cloc
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Cloc
+        run: sudo apt-get install -y cloc
+
+      - name: Count lines of code with Cloc
+        run: |
+          cloc src/ > cloc-report.txt
+          cat cloc-report.txt
+
+      - name: Upload Cloc Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloc-report
+          path: cloc-report.txt
+
+    
