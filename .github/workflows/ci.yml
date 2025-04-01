@@ -3,6 +3,12 @@
 name: CI
 
 # Controls when the workflow will run
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
 on:
   push:
     branches: [ main, master, develop ]
