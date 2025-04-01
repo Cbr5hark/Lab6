@@ -129,7 +129,7 @@ jobs:
       - name: Count lines of code
         run: |
           sudo apt-get install -y cloc
-          cloc . > cloc-report.txt
+          cloc src/ > cloc-report.txt
           cat cloc-report.txt
           
       - name: Upload CLOC report
