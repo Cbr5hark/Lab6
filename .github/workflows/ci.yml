@@ -94,19 +94,20 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  count-lines-of-code:
-    name: Cloc
+  cloc:
+    name: Count Lines of Code
     runs-on: ubuntu-latest
     steps:
-      - name: Install Cloc
-        run: sudo apt-get install -y cloc
-
-      - name: Count lines of code with Cloc
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Count lines of code
         run: |
+          sudo apt-get install -y cloc
           cloc . > cloc-report.txt
           cat cloc-report.txt
-
-      - name: Upload Cloc Report
+          
+      - name: Upload CLOC report
         uses: actions/upload-artifact@v4
         with:
           name: cloc-report
