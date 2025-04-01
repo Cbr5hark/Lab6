@@ -17,7 +17,16 @@ class TicTacToe:
         self.button_frame.grid(row=2, column=0, columnspan=3)
 
         self.create_buttons()
-       
+
+        self.restart_button = tk.Button(self.master, text="Скинути рахунок", font='Arial 14',command=self.reset_score)
+        self.restart_button.grid(row=3, column=0, columnspan=3, pady=10)
+        self.x_win = 0
+        self.o_win = 0
+        self.xplayer_win_counter = tk.Label(self.master, text=f"X: {self.x_win}", font='Arial 14')
+        self.xplayer_win_counter.grid(row=3, column=0, pady=(5, 10))
+
+        self.oplayer_win_counter = tk.Label(self.master, text=f"O: {self.o_win}",font='Arial 14')
+        self.oplayer_win_counter.grid(row=3, column=2, pady=(5, 10))
 
     def create_buttons(self):
         for row in range(3):
@@ -44,6 +53,12 @@ class TicTacToe:
             self.buttons[row][col].config(text=self.current_player)
             winner = self.check_winner()
             if winner:
+                if (winner == 'X'):
+                    self.x_win += 1
+                else:
+                    self.o_win += 1
+                self.xplayer_win_counter.config(text=f"X: {self.x_win}")
+                self.oplayer_win_counter.config(text=f"0: {self.o_win}")
                 messagebox.showinfo("Вітаємо!", f"Гравець {winner} виграв!")
                 self.reset_game()
             elif self.is_full():
@@ -75,6 +90,12 @@ class TicTacToe:
         for row in range(3):
             for col in range(3):
                 self.buttons[row][col].config(text=' ')
+
+    def reset_score(self):
+        self.x_win = 0
+        self.xplayer_win_counter.config(text=f"X: {self.x_win}")
+        self.o_win = 0
+        self.oplayer_win_counter.config(text=f"0: {self.o_win}")
 
 
 if __name__ == "__main__":
