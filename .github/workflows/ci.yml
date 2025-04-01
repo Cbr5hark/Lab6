@@ -73,6 +73,7 @@ jobs:
           level: info
   
   tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository

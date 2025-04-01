@@ -152,5 +152,42 @@ class TestTicTacToe(unittest.TestCase):
 
         self.assertEqual(self.game.current_player, first_player)
 
+    def test_reset_score(self):
+        """Test that the reset_score method resets both scores to zero."""
+        self.game.x_win = 5
+        self.game.o_win = 3
+        
+        self.game.reset_score()
+        
+        self.assertEqual(self.game.x_win, 0)
+        self.assertEqual(self.game.o_win, 0)
+    
+    def test_score_update_x_win(self):
+        """Test score updating when X wins."""
+        initial_x_wins = self.game.x_win
+        
+        with patch.object(self.game, 'check_winner', return_value='X'), \
+             patch.object(self.game, 'reset_game'), \
+             patch('tkinter.messagebox.showinfo'):
+            
+            self.game.on_button_click(0, 0)
+            
+            self.assertEqual(self.game.x_win, initial_x_wins + 1)
+            self.assertEqual(self.game.o_win, 0)
+    
+    def test_score_update_o_win(self):
+        """Test score updating when O wins."""
+        initial_o_wins = self.game.o_win
+        self.game.current_player = 'O'
+        
+        with patch.object(self.game, 'check_winner', return_value='O'), \
+             patch.object(self.game, 'reset_game'), \
+             patch('tkinter.messagebox.showinfo'):
+            
+            self.game.on_button_click(0, 0)
+            
+            self.assertEqual(self.game.o_win, initial_o_wins + 1)
+            self.assertEqual(self.game.x_win, 0)
+
 if __name__ == '__main__':
     unittest.main()
