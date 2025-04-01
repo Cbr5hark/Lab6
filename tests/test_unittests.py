@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from MyProject import TicTacToe
+from src.MyProject import TicTacToe
 
 class TestTicTacToe(unittest.TestCase):
     def setUp(self):
